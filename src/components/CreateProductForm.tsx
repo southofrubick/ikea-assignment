@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 import { Button, Form } from 'react-bootstrap'
 import { createProduct, type Colour, type ProductType } from '../api'
+import { useNavigate } from 'react-router'
 
 interface CreateProductFormProps {
     productTypes: ProductType[]
@@ -23,6 +24,7 @@ export default function CreateProductForm({
     colours,
 }: CreateProductFormProps) {
     const [product, setProduct] = useState({name: '', type: productTypes[0].id, colours: []} as FormProduct)
+    const navigate = useNavigate()
 
     const colourLength = colours.length * 25
 
@@ -68,7 +70,10 @@ export default function CreateProductForm({
             colour_ids: product.colours,
         }
 
-        createProduct(productDTO)
+        createProduct(productDTO).then(() => {
+            navigate(`/products`)
+            window.location.reload()
+        })
     }
 
     return (
