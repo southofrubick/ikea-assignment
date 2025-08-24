@@ -1,31 +1,67 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { Form } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
+
+interface Product {
+    name: string
+    type: number
+    colours: number[]
+}
 
 export default function CreateProductForm() {
+    const [product, setProduct] = useState({name: '', type: 0, colours: []} as Product)
+
+    const updateProduct = (event: Event) => {
+        const field = event.target.id
+        let value = event.target.value
+
+        if (field === 'type') {
+            value = parseInt(value)
+        }
+
+        setProduct({
+            ...product,
+            [field]: value,
+        })
+    }
+
+    const toggleColour = (event: Event) => {
+        setProduct({
+            ...product,
+            colours: [].slice
+                .call(event.target.selectedOptions)
+                .map(item => parseInt(item.value))
+        })
+    }
+
     return (
-        <Form>
-            <Form.Group className="mb-3" controlId="formProductName">
+        <Form onSubmit={() => console.log(product)}>
+            <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Product Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter product name" />
+                <Form.Control onChange={(e) => updateProduct(e)} type="text" placeholder="Enter product name" />
                 <Form.Text className="text-muted">
                     Please enter the name of the product.
                 </Form.Text>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formProductType">
+            <Form.Group className="mb-3" controlId="type">
                 <Form.Label>Product Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter product type" />
-                <Form.Select className="text-muted">
-                    Please enter the name of the product.
-                </Form.Select>
+                <Form.Control defaultValue={1} onChange={(e) => updateProduct(e)} as="select" className="text-muted">
+                    <option value="1">Type A</option>
+                    <option value="2">Type B</option>
+                    <option value="3">Type C</option>
+                </Form.Control>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formProductColour">
+            <Form.Group className="mb-3" controlId="colours">
                 <Form.Label>Product Name</Form.Label>
-                <Form.Control multiple type="text" placeholder="Enter product name" />
-                <Form.Select className="text-muted">
-                    Please enter the name of the product.
-                </Form.Select>
+                <Form.Control onChange={(e) => toggleColour(e)} as="select" multiple className="text-muted">
+                    <option value="1">Red</option>
+                    <option value="2">Blue</option>
+                    <option value="3">Black</option>
+                </Form.Control>
             </Form.Group>
+            <Button variant="primary" type="submit">
+                Submit
+            </Button>
         </Form>
     )
 }

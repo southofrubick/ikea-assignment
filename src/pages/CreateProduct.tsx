@@ -1,10 +1,12 @@
 import React from 'react'
 
+import { CreateProductForm } from '../components'
+
 export default function CreateProduct() {
     return (
         <>
-            <div>CreateProduct</div>
-            <p>Here you can create a new product.</p>
+            CreateProduct
+            <CreateProductForm />
         </>
     )
 }
