@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react'
 
 import { Button, Form } from 'react-bootstrap'
@@ -50,14 +51,14 @@ export default function CreateProductForm() {
         <Form onSubmit={() => console.log(product)}>
             <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Product Name</Form.Label>
-                <Form.Control onChange={(e: Event) => updateProduct(e)} type="text" placeholder="Enter product name" />
+                <Form.Control onChange={(e: any) => updateProduct(e)} type="text" placeholder="Enter product name" />
                 <Form.Text className="text-muted">
                     Please enter the name of the product.
                 </Form.Text>
             </Form.Group>
             <Form.Group className="mb-3" controlId="type">
                 <Form.Label>Product Name</Form.Label>
-                <Form.Control defaultValue={1} onChange={(e: Event) => updateProduct(e)} as="select" className="text-muted">
+                <Form.Control defaultValue={1} onChange={(e: any) => updateProduct(e)} as="select" className="text-muted">
                     <option value="1">Type A</option>
                     <option value="2">Type B</option>
                     <option value="3">Type C</option>
@@ -65,7 +66,7 @@ export default function CreateProductForm() {
             </Form.Group>
             <Form.Group className="mb-3" controlId="colours">
                 <Form.Label>Product Name</Form.Label>
-                <Form.Control onChange={(e: Event) => toggleColour(e)} as="select" multiple className="text-muted">
+                <Form.Control onChange={(e: any) => toggleColour(e)} as="select" multiple className="text-muted">
                     <option value="1">Red</option>
                     <option value="2">Blue</option>
                     <option value="3">Black</option>
