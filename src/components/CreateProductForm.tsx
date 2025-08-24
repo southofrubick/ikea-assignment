@@ -11,8 +11,8 @@ interface Product {
 }
 
 interface CreateProductFormProps {
-    productTypes?: ProductType[]
-    colours?: ColourType[]
+    productTypes: ProductType[]
+    colours: ColourType[]
 }
 
 export default function CreateProductForm({
