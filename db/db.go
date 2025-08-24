@@ -24,7 +24,7 @@ func InitDB() (*pgxpool.Pool, error) {
 		return nil, fmt.Errorf("Unable to ping database: %w", err)
 	}
 
-	err = CreateTables(pool)
+	err = createTables(pool)
 	if err != nil {
 		return nil, fmt.Errorf("Unable to create tables: %w", err)
 	}
@@ -42,7 +42,7 @@ func InitDB() (*pgxpool.Pool, error) {
 	return pool, nil
 }
 
-func CreateTables(db *pgxpool.Pool) error {
+func createTables(db *pgxpool.Pool) error {
 	var query = `
 	CREATE TABLE IF NOT EXISTS colour (
 		id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -147,7 +147,7 @@ func populateColoursTable(db *pgxpool.Pool) ([]int, error) {
 	return ids, nil
 }
 
-func CreateProductColour(db *pgxpool.Pool, productID int, colourID int) (int, error) {
+func createProductColour(db *pgxpool.Pool, productID int, colourID int) (int, error) {
 	var query = `
 	INSERT INTO product_colour (product_id, colour_id)
 	VALUES ($1, $2)
@@ -161,7 +161,7 @@ func CreateProductColour(db *pgxpool.Pool, productID int, colourID int) (int, er
 	return id, nil
 }
 
-func CreateProduct(db *pgxpool.Pool, name string, productTypeID int) (int, error) {
+func CreateProduct(db *pgxpool.Pool, name string, productTypeID int, colourID int) (int, error) {
 	var query = `
 	INSERT INTO product (name, product_type_id)
 	VALUES ($1, $2)
@@ -173,6 +173,11 @@ func CreateProduct(db *pgxpool.Pool, name string, productTypeID int) (int, error
 	err := db.QueryRow(ctx, query, name, productTypeID).Scan(&id)
 	if err != nil {
 		return 0, fmt.Errorf("error creating product: %w", err)
+	}
+
+	_, err = createProductColour(db, id, colourID)
+	if err != nil {
+		return 0, fmt.Errorf("error creating product colour: %w", err)
 	}
 
 	return id, nil
