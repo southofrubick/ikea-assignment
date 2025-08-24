@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { Button, Form } from 'react-bootstrap'
 
@@ -12,8 +12,14 @@ export default function CreateProductForm() {
     const [product, setProduct] = useState({name: '', type: 0, colours: []} as Product)
 
     const updateProduct = (event: Event) => {
-        const field = event.target.id
-        let value = event.target.value
+        const { target } = event
+
+        if (!(target instanceof HTMLInputElement || target instanceof HTMLSelectElement)) {
+            return
+        }
+
+        const field = target.id
+        let value: string | number = target.value
 
         if (field === 'type') {
             value = parseInt(value)
@@ -26,11 +32,19 @@ export default function CreateProductForm() {
     }
 
     const toggleColour = (event: Event) => {
+        const { target } = event
+
+        if (!(target instanceof HTMLSelectElement)) {
+            return
+        }
+
+        console.log(target.selectedOptions)
+
         setProduct({
             ...product,
             colours: [].slice
-                .call(event.target.selectedOptions)
-                .map(item => parseInt(item.value))
+                .call(target.selectedOptions)
+                .map(option => parseInt(option.value))
         })
     }
 
