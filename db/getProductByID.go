@@ -40,35 +40,35 @@ func GetProductByID(db *pgxpool.Pool, id int) (*entity.Product, error) {
 	return product, nil
 }
 
-func getColoursByProductID(db *pgxpool.Pool, productId int) ([]string, error) {
+func getColoursByProductID(db *pgxpool.Pool, productID int) ([]string, error) {
 	var query = `
 		SELECT colour_id FROM product_colour WHERE product_id = $1;
 	`
 
-	rows, err := db.Query(ctx, query, productId)
+	rows, err := db.Query(ctx, query, productID)
 	if err != nil {
 		return nil, fmt.Errorf("error getting product_colours for product: %w", err)
 	}
 	defer rows.Close()
 
-	var colourIds []int
+	var colourIDs []int
 
 	for rows.Next() {
-		var colourId int
-		err := rows.Scan(&colourId)
+		var colourID int
+		err := rows.Scan(&colourID)
 
 		if err != nil {
 			return nil, fmt.Errorf("error scanning product_colours: %w", err)
 		}
 
-		colourIds = append(colourIds, colourId)
+		colourIDs = append(colourIDs, colourID)
 	}
 
 	query = `
 		SELECT name FROM colour WHERE id = ANY ($1);
 	`
 
-	rows, err = db.Query(ctx, query, colourIds)
+	rows, err = db.Query(ctx, query, colourIDs)
 	if err != nil {
 		return nil, fmt.Errorf("error getting colours for product: %w", err)
 	}
