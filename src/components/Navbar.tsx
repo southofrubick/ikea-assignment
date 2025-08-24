@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { Container, Nav, Navbar as Bar } from 'react-bootstrap'
 import { NavbarWrapper } from './Navbar.styled'
 

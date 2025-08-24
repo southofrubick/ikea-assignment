@@ -1,4 +1,4 @@
-import React, { type JSX, type ReactNode } from 'react'
+import { type JSX, type ReactNode } from 'react'
 
 import { Route, Routes, Outlet } from 'react-router-dom'
 import { CreateProduct, ProductsList } from './pages'
