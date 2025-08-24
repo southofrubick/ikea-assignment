@@ -2,7 +2,7 @@
 import { useState } from 'react'
 
 import { Button, Form } from 'react-bootstrap'
-import { createProduct, type ColourType, type ProductType } from '../api'
+import { createProduct, type Colour, type ProductType } from '../api'
 
 interface Product {
     name: string
@@ -12,7 +12,7 @@ interface Product {
 
 interface CreateProductFormProps {
     productTypes: ProductType[]
-    colours: ColourType[]
+    colours: Colour[]
 }
 
 export default function CreateProductForm({

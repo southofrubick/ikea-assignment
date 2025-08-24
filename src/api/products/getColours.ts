@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios'
 
-export interface ColourType {
+export interface Colour {
     id: number
     name: string
     createdAt: string
@@ -18,7 +18,7 @@ export default async function getColours(
             },
         )
 
-        return data as ColourType[]
+        return data as Colour[]
     } catch (error) {
         const axiosError = error as AxiosError
 
