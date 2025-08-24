@@ -10,12 +10,12 @@ export default async function postNewProduct(
     params: PostNewProductDTO,
     abortController?: AbortController,
 ) {
-    const ids: number[] = []
+    let id: number
 
     try {
         const { name, product_type_id, colour_ids } = params
 
-        colour_ids.forEach(async colour_id => {
+        for await (let colour_id of colour_ids) {
             const param = JSON.stringify({ name, product_type_id: product_type_id.toString(), colour_id: colour_id.toString() })
             const { data } = await axios.post(
                 'http://localhost:8080/api/products',
@@ -28,10 +28,12 @@ export default async function postNewProduct(
                 },
             )
 
-            ids.push(data.id)
-        })
+            if (!id) {
+                id = data.id
+            }
+        }
 
-        return ids
+        return id
     } catch (error) {
         const axiosError = error as AxiosError
 

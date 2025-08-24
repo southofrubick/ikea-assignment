@@ -26,14 +26,15 @@ func CreateNewProduct(e *echo.Echo, pool *pgxpool.Pool) {
 			log.Println("Invalid product_type_id", err)
 			return c.String(http.StatusBadRequest, "Invalid product_type_id")
 		}
+		if name == "" {
+			log.Println("Name is required")
+			return c.String(http.StatusBadRequest, "Name is required")
+		}
+
 		colourID, err := strconv.Atoi(json_map["colour_id"].(string))
 		if err != nil {
 			log.Println("Invalid colour_id", err)
 			return c.String(http.StatusBadRequest, "Invalid colour_id")
-		}
-		if name == "" {
-			log.Println("Name is required")
-			return c.String(http.StatusBadRequest, "Name is required")
 		}
 
 		productID, err := db.CreateProduct(pool, name, product_type_id, colourID)
