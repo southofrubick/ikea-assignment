@@ -18,7 +18,7 @@ const BORDER_WIDTH = '0px 12px'
 const PADDING = '6px 18px'
 const WHITE = '#ffffff'
 const BG_COLOUR = '#f2f2f2'
-const STYLE = { background: WHITE, borderWidth: BORDER_WIDTH, borderColor: BG_COLOUR, padding: PADDING, textAlign: 'center' }
+const STYLE = { background: WHITE, borderWidth: BORDER_WIDTH, borderColor: BG_COLOUR, padding: PADDING }
 const HEADER_STYLE = { color: WHITE, fontSize: 'large', textAlign: 'left', minWidth: '200px' }
 
 export default function ProductsList() {
@@ -30,8 +30,8 @@ export default function ProductsList() {
         })
     }, [])
 
-    if (!products?.length && products.length === 0) {
-        return <div>Loading...</div>
+    if (!products?.length || products.length === 0) {
+        return <div>Loading... or you haven't added any products yet.</div>
     }
 
     return (
