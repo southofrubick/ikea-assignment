@@ -2,7 +2,7 @@
 import { useState } from 'react'
 
 import { Button, Form } from 'react-bootstrap'
-import type { ColourType, ProductType } from '../api'
+import { createProduct, type ColourType, type ProductType } from '../api'
 
 interface Product {
     name: string
@@ -56,8 +56,21 @@ export default function CreateProductForm({
         })
     }
 
+    const handleSubmit = () => {
+        const productDTO = {
+            name: product.name,
+            product_type_id: product.type,
+            colour_ids: product.colours,
+        }
+
+        createProduct(productDTO)
+    }
+
     return (
-        <Form onSubmit={() => console.log(product)}>
+        <Form onSubmit={(e: Event) => {
+            e.preventDefault()
+            handleSubmit()
+        }}>
             <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Product Name</Form.Label>
                 <Form.Control onChange={(e: any) => updateProduct(e)} type="text" placeholder="Enter product name" />

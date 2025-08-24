@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getColours, getProductTypes, type ColourType } from '../api'
+import { getColours, getProductTypes, type ColourType, type ProductType } from '../api'
 import { CreateProductForm } from '../components'
 
 export default function CreateProduct() {
