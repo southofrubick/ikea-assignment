@@ -4,22 +4,27 @@ import { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { createProduct, type Colour, type ProductType } from '../api'
 
-interface Product {
-    name: string
-    type: number
-    colours: number[]
-}
-
 interface CreateProductFormProps {
     productTypes: ProductType[]
     colours: Colour[]
 }
 
+interface FormProduct {
+    name: string
+    type: number
+    colours: number[]
+}
+
+const CONTROL_STYLE = { height: '40px', width: '500px' }
+const STYLE = { height: '80px', width: '500px' }
+
 export default function CreateProductForm({
     productTypes,
     colours,
 }: CreateProductFormProps) {
-    const [product, setProduct] = useState({name: '', type: 0, colours: []} as Product)
+    const [product, setProduct] = useState({name: '', type: productTypes[0].id, colours: []} as FormProduct)
+
+    const colourLength = colours.length * 25
 
     const updateProduct = (event: Event) => {
         const { target } = event
@@ -67,34 +72,31 @@ export default function CreateProductForm({
     }
 
     return (
-        <Form onSubmit={(e: Event) => {
+        <Form onSubmit={(e: any) => {
             e.preventDefault()
             handleSubmit()
         }}>
-            <Form.Group className="mb-3" controlId="name">
-                <Form.Label>Product Name</Form.Label>
-                <Form.Control onChange={(e: any) => updateProduct(e)} type="text" placeholder="Enter product name" />
-                <Form.Text className="text-muted">
-                    Please enter the name of the product.
-                </Form.Text>
+            <Form.Group className="mb-3" controlId="name" style={STYLE}>
+                <Form.Label>Name</Form.Label>
+                <Form.Control onChange={(e: any) => updateProduct(e)} type="text" placeholder="Enter product name" style={CONTROL_STYLE} />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="type">
-                <Form.Label>Product Name</Form.Label>
-                <Form.Control defaultValue={1} onChange={(e: any) => updateProduct(e)} as="select" className="text-muted">
+            <Form.Group className="mb-3" controlId="type" style={STYLE}>
+                <Form.Label>Type</Form.Label>
+                <Form.Control defaultValue={1} onChange={(e: any) => updateProduct(e)} as="select" className="text-muted" style={CONTROL_STYLE} >
                     {productTypes.map((productType) => (
                         <option value={productType.id} key={productType.id}>{productType.name}</option>
                     ))}
                 </Form.Control>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="colours">
-                <Form.Label>Product Name</Form.Label>
-                <Form.Control onChange={(e: any) => toggleColour(e)} as="select" multiple className="text-muted">
+            <Form.Group className="mb-3" controlId="colours" style={{ ...STYLE, height: `${colourLength + 40}px` }}>
+                <Form.Label>Colour</Form.Label>
+                <Form.Control onChange={(e: any) => toggleColour(e)} as="select" multiple className="text-muted" style={{ ...STYLE, height: `${colourLength}px` }} >
                     {colours.map((colour) => (
                         <option value={colour.id} key={colour.id}>{colour.name}</option>
                     ))}
                 </Form.Control>
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" style={{ ...CONTROL_STYLE, marginTop: '36px' }} variant="dark">
                 Submit
             </Button>
         </Form>

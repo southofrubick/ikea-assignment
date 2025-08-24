@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getColours, getProductTypes, type Colour, type ProductType } from '../api'
-import { CreateProductForm } from '../components'
+import { CreateProductForm, Title } from '../components'
 
 export default function CreateProduct() {
     const [productTypes, setProductTypes] = useState([] as ProductType[])
@@ -18,7 +18,7 @@ export default function CreateProduct() {
     return (
         <>
             <div>
-                <h3>CreateProduct</h3>
+                <Title>Create Product</Title>
                 <CreateProductForm productTypes={productTypes} colours={colours} />
             </div>
         </>
