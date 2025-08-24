@@ -2,6 +2,7 @@
 import { useState } from 'react'
 
 import { Button, Form } from 'react-bootstrap'
+import type { ColourType, ProductType } from '../api'
 
 interface Product {
     name: string
@@ -9,7 +10,15 @@ interface Product {
     colours: number[]
 }
 
-export default function CreateProductForm() {
+interface CreateProductFormProps {
+    productTypes?: ProductType[]
+    colours?: ColourType[]
+}
+
+export default function CreateProductForm({
+    productTypes,
+    colours,
+}: CreateProductFormProps) {
     const [product, setProduct] = useState({name: '', type: 0, colours: []} as Product)
 
     const updateProduct = (event: Event) => {
@@ -59,17 +68,17 @@ export default function CreateProductForm() {
             <Form.Group className="mb-3" controlId="type">
                 <Form.Label>Product Name</Form.Label>
                 <Form.Control defaultValue={1} onChange={(e: any) => updateProduct(e)} as="select" className="text-muted">
-                    <option value="1">Type A</option>
-                    <option value="2">Type B</option>
-                    <option value="3">Type C</option>
+                    {productTypes.map((productType) => (
+                        <option value={productType.id} key={productType.id}>{productType.name}</option>
+                    ))}
                 </Form.Control>
             </Form.Group>
             <Form.Group className="mb-3" controlId="colours">
                 <Form.Label>Product Name</Form.Label>
                 <Form.Control onChange={(e: any) => toggleColour(e)} as="select" multiple className="text-muted">
-                    <option value="1">Red</option>
-                    <option value="2">Blue</option>
-                    <option value="3">Black</option>
+                    {colours.map((colour) => (
+                        <option value={colour.id} key={colour.id}>{colour.name}</option>
+                    ))}
                 </Form.Control>
             </Form.Group>
             <Button variant="primary" type="submit">
