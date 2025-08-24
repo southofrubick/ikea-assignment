@@ -1,7 +1,12 @@
 # ikea-assignment
 Tech interview prep for [Martin Rimbro Åstrand](https://se.linkedin.com/in/martin-rimbro-%C3%A5strand)
 
-[Trello board](https://trello.com/b/8ku9FoK8/ikea-assignment)
+A somewhat simple app to store (non permanently for testing purposes) product information, display it, and adding more.
+
+
+<img width="1252" height="838" alt="Screenshot 2025-08-24 at 23 36 38" src="https://github.com/user-attachments/assets/74f58ad4-e791-4d7b-be8d-f8e962a9fc9a" />
+<img width="1251" height="842" alt="Screenshot 2025-08-24 at 23 37 58" src="https://github.com/user-attachments/assets/d0631d9f-f323-4351-814a-6085e6db2979" />
+
 
 ## REQUIREMENTS
 Docker
@@ -59,3 +64,4 @@ But with all of the knowledge I have now. And React being the only framework in 
 I've only ever worked with PostgreSQL using Django's ORM in Python, and thought it would be a fun challenge to set it up for a GO application, and I've learned a lot.
 
 
+[Trello board](https://trello.com/b/8ku9FoK8/ikea-assignment)
