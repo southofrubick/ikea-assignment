@@ -10,7 +10,8 @@ import (
 func GetAllProducts(db *pgxpool.Pool) ([]entity.Product, error) {
 	var query = `
 	SELECT id, name, product_type_id, created_at, updated_at
-	FROM product;
+	FROM product
+	ORDER BY created_at DESC;
 	`
 	rows, err := db.Query(ctx, query)
 	if err != nil {
