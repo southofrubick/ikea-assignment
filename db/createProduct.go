@@ -22,9 +22,16 @@ func createProductColour(db *pgxpool.Pool, productID int, colourID int) (int, er
 
 func CreateProduct(db *pgxpool.Pool, name string, productTypeID int, colourID int) (int, error) {
 	var query = `
-	INSERT INTO product (name, product_type_id)
-	VALUES ($1, $2)
-	RETURNING id;
+	WITH res AS (
+		INSERT INTO product (name, product_type_id)
+		VALUES ($1, $2)
+		ON CONFLICT(name, product_type_id) DO NOTHING
+		RETURNING id
+	)
+	SELECT id FROM res
+	UNION ALL
+	SELECT id FROM product WHERE name = $1 AND product_type_id = $2
+	LIMIT 1;
 	`
 
 	var id int
