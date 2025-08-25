@@ -55,7 +55,7 @@ run `docker exec -it ikea-assignment-db-1 psql -U user -d db` from the terminal.
   - Pages
   - Components
 - E2E testing using playwright
-- Responsivity in all components
+- Responsivity in all components (especially the table, when it gets too big)
 - Setup script in bash
 Had I only and endless supply of time..
 
